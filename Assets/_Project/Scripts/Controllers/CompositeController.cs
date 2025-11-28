@@ -13,11 +13,10 @@ public class CompositeController : Controller
 
     public override void Enable()
     {
-       base.Enable();
+        base.Enable();
 
         foreach (Controller controller in _controllers)
             controller.Enable();
-
     }
 
     public override void Disable()
