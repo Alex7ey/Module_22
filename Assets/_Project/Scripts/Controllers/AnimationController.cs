@@ -3,15 +3,19 @@ using UnityEngine;
 public class AnimationController : Controller
 {
     private Animator _animator;
-
-    private IMovable _movable;
-    private IHaveHealth _health;
     private Transform _transform;
 
+    private IMovable _movable;
+    private IHealthSystem _healthSystem;
 
-    public AnimationController(IHaveHealth health, IMovable movable, Animator animator, Transform transform)
+    private readonly int _moveKey = Animator.StringToHash("MovementSpeed");
+    private readonly int _healthKey = Animator.StringToHash("Health");
+    private readonly int _hitKey = Animator.StringToHash("Hit");
+    private readonly int _deadKey = Animator.StringToHash("Dead");
+
+    public AnimationController(IHealthSystem healthSystem, IMovable movable, Animator animator, Transform transform)
     {
-        _health = health;
+        _healthSystem = healthSystem;
         _animator = animator;
         _movable = movable;
         _transform = transform;
@@ -19,15 +23,25 @@ public class AnimationController : Controller
 
     protected override void UpdateLogic(float deltaTime)
     {
-        _animator.SetFloat("MovementSpeed", (_movable.CurrentDirectionToTarget - _transform.position).magnitude);
-        _animator.SetFloat("Health", _health.CurrentHealth / _health.MaxHealth);
+        SetMovementParameter();
+        SetHealthParameter();
 
-        if (_health.IsInjured)
-        {
-            _animator.SetTrigger("Hit");
-        }
+        if (IsTakeDamage())
+            TriggerDamageAnimation();
 
-        if(_health.IsAlive == false)
-            _animator.SetBool("Dead", true);
+        if (IsAlive() == false)
+            TriggerDeathAnimation();
     }
+
+    private void SetMovementParameter() => _animator.SetFloat(_moveKey, (_movable.CurrentDirectionToTarget - _transform.position).magnitude);
+
+    private void SetHealthParameter() => _animator.SetFloat(_healthKey, _healthSystem.CurrentHealth / _healthSystem.MaxHealth);
+
+    private void TriggerDamageAnimation() => _animator.SetTrigger(_hitKey);
+
+    private void TriggerDeathAnimation() => _animator.SetBool(_deadKey, true);
+
+    private bool IsTakeDamage() => _healthSystem.IsTakeDamage;
+
+    private bool IsAlive() => _healthSystem.IsAlive;
 }

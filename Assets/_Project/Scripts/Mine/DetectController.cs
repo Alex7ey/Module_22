@@ -6,8 +6,6 @@ public class DetectController : Controller
     private float _radius;
     private Transform _transform;
 
-    private Collider[] _collider = new Collider[1];
-
     public DetectController(IDetect detect, float radius, Transform transform)
     {
         _detect = detect;
@@ -17,11 +15,13 @@ public class DetectController : Controller
 
     protected override void UpdateLogic(float deltaTime)
     {
-        Physics.OverlapSphereNonAlloc(_transform.position, _radius, _collider);
-
-        if (_collider[0].TryGetComponent(out IDamagable damagable))
+        Collider[] colliders = Physics.OverlapSphere(_transform.position, _radius);
+        foreach (Collider collider in colliders)
         {
-            _detect.Detected();
-        } 
+            if (collider.TryGetComponent(out IDamagable damagable))
+            {
+                _detect.Detected();
+            }
+        }
     }
 }

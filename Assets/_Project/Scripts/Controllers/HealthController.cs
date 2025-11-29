@@ -1,38 +1,37 @@
-public class HealthController : Controller, IDamagable, IHaveHealth
+public class HealthController : Controller, IHealthSystem
 {
     private int _currentHealth;
     private int _maxHealth;
 
-    public HealthController(int currentHealth)
+    public HealthController(int maxHealth)
     {
-        _currentHealth = currentHealth;
-        _maxHealth = currentHealth;
+        _currentHealth = maxHealth;
+        _maxHealth = maxHealth;
     }
 
     public bool IsAlive => _currentHealth > 0;
-    public bool IsInjured { get; private set; }
+    public bool IsTakeDamage { get; private set; }
     public int CurrentHealth => _currentHealth;
     public int MaxHealth => _maxHealth;
 
-    public void TakeDamage(int value)
+    public void TakeDamage(int damage)
     {
-        _currentHealth -= value;
+        if (damage <= 0 || IsAlive == false)
+            return;
 
-        if (_currentHealth > 0)
+        _currentHealth -= damage;
+
+        if (IsAlive == false)
         {
-            IsInjured = true;
-
-            if (_currentHealth < 0)
-            {
-                _currentHealth = 0;
-            }
+            _currentHealth = 0;
             return;
         }
+
+        IsTakeDamage = true;
     }
 
     protected override void UpdateLogic(float deltaTime)
     {
-        IsInjured = false;
+        IsTakeDamage = false;
     }
-
 }
