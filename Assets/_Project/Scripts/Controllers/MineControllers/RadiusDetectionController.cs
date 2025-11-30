@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class DetectController : Controller
+public class RadiusDetectionController : Controller
 {
-    private IDetect _detect;
-    private float _radius;
-    private Transform _transform;
+    private readonly IDetect _detect;
+    private readonly float _radius;
+    private readonly Transform _transform;
 
-    public DetectController(IDetect detect, float radius, Transform transform)
+    public RadiusDetectionController(IDetect detect, float radius, Transform transform)
     {
         _detect = detect;
         _radius = radius;
@@ -16,11 +16,13 @@ public class DetectController : Controller
     protected override void UpdateLogic(float deltaTime)
     {
         Collider[] colliders = Physics.OverlapSphere(_transform.position, _radius);
+
         foreach (Collider collider in colliders)
         {
-            if (collider.TryGetComponent(out IDamagable damagable))
+            if (collider.TryGetComponent(out IDamagable _))
             {
                 _detect.Detected();
+                break;
             }
         }
     }

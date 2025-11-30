@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class DestinationMarkerController : Controller
 {
-    private GameObject _marker;
-    private Transform _playerTransform;
+    private readonly GameObject _marker;
+    private readonly Transform _playerTransform;
 
     private const float CollectionDistance = 0.5f;
 

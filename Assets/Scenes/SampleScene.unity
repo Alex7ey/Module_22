@@ -1971,8 +1971,8 @@ MonoBehaviour:
   _rotationSpeed: 300
   _movementSpeed: 3
   _maxHealth: 10
-  _flag: {fileID: 350932715}
-  _progressBar: {fileID: 1715711070}
+  _destinationMarker: {fileID: 350932715}
+  _healthBar: {fileID: 1715711070}
 --- !u!4 &299304095 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5846356458477517791, guid: 84fc44f73499ea7498a398367daff55c,
@@ -3671,9 +3671,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dddb3d19a3cad6c4c979d672b5c75a9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radiusDetected: 2
+  _detectionRadius: 2
   _timeBeforeExplosion: 2
-  _damage: 10
+  _damage: 8
   _explosionEffect: {fileID: 446352285}
 --- !u!4 &495726359 stripped
 Transform:
@@ -4280,9 +4280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dddb3d19a3cad6c4c979d672b5c75a9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radiusDetected: 2
+  _detectionRadius: 2
   _timeBeforeExplosion: 2
-  _damage: 10
+  _damage: 3
   _explosionEffect: {fileID: 446352285}
 --- !u!1 &560404907 stripped
 GameObject:
@@ -9381,9 +9381,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dddb3d19a3cad6c4c979d672b5c75a9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radiusDetected: 2
+  _detectionRadius: 2
   _timeBeforeExplosion: 2
-  _damage: 10
+  _damage: 3
   _explosionEffect: {fileID: 446352285}
 --- !u!4 &1150876450 stripped
 Transform:
@@ -13687,11 +13687,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: bbe211ce8c59beb40a6d765749179794, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -14788,7 +14788,7 @@ GameObject:
   - component: {fileID: 1860534377}
   - component: {fileID: 1860534376}
   m_Layer: 5
-  m_Name: HpBar
+  m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14834,11 +14834,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0

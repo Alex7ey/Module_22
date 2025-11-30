@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Mine : MonoBehaviour, IDetect
 {
-    [SerializeField] private float _radiusDetected;
+    [SerializeField] private float _detectionRadius;
     [SerializeField] private float _timeBeforeExplosion;
     [SerializeField] private int _damage;
     [SerializeField] private ParticleSystem _explosionEffect;
 
-    private DetectController _radiusController;
+    private RadiusDetectionController _radiusDetectionController;
     private ExplosionController _explosionController;
     private CompositeController _controllers;
 
@@ -18,11 +18,16 @@ public class Mine : MonoBehaviour, IDetect
 
     private void Awake()
     {
-        _radiusController = new(this, _radiusDetected, transform);
-        _explosionController = new(_timeBeforeExplosion, transform, _radiusDetected, _explosionEffect , _damage);
-
-        _controllers = new CompositeController(_radiusController, _explosionController);
+        InitializeControllers();
         _controllers.Enable();
+    }
+
+    private void InitializeControllers()
+    {
+        _radiusDetectionController = new(this, _detectionRadius, transform);
+        _explosionController = new(_timeBeforeExplosion, transform, _detectionRadius, _explosionEffect , _damage);
+
+        _controllers = new CompositeController(_radiusDetectionController, _explosionController);
     }
 
     private void Update()
@@ -32,7 +37,12 @@ public class Mine : MonoBehaviour, IDetect
 
     private void OnDrawGizmos()
     {
+        ShowRadiusDetection();
+    }
+
+    private void ShowRadiusDetection()
+    {
         Gizmos.color = new Color(1, 0, 0, 0.3f);
-        Gizmos.DrawSphere(transform.position, _radiusDetected);
+        Gizmos.DrawSphere(transform.position, _detectionRadius);
     }
 }

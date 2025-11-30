@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 public class MovementNavMeshAgentController
 {
-    private NavMeshAgent _agent;
+    private readonly NavMeshAgent _agent;
 
     public MovementNavMeshAgentController(NavMeshAgent agent, float movementSpeed, Vector3 startPosition)
     {

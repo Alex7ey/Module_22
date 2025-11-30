@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class AnimationController : Controller
 {
-    private Animator _animator;
-    private Transform _transform;
+    private readonly Animator _animator;
+    private readonly Transform _transform;
 
-    private IMovable _movable;
-    private IHealthSystem _healthSystem;
+    private readonly IMovable _movable;
+    private readonly IHealthSystem _healthSystem;
 
     private readonly int _moveKey = Animator.StringToHash("MovementSpeed");
     private readonly int _healthKey = Animator.StringToHash("Health");
@@ -33,7 +33,7 @@ public class AnimationController : Controller
             TriggerDeathAnimation();
     }
 
-    private void SetMovementParameter() => _animator.SetFloat(_moveKey, (_movable.CurrentDirectionToTarget - _transform.position).magnitude);
+    private void SetMovementParameter() => _animator.SetFloat(_moveKey, (_movable.CurrentPositionTarget - _transform.position).magnitude);
 
     private void SetHealthParameter() => _animator.SetFloat(_healthKey, _healthSystem.CurrentHealth / _healthSystem.MaxHealth);
 

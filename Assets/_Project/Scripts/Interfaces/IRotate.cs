@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IRotate
 {
-   Vector3 CurrentDirectionToTarget { get; }
+   Vector3 CurrentPositionTarget { get; }
 
-    void SetLookAtDirection(Vector3 direction);
+    void SetLookAtPosition(Vector3 point);
 }

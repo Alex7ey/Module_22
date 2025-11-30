@@ -1,7 +1,8 @@
 public class HealthController : Controller, IHealthSystem
 {
+    private readonly int _maxHealth;
+
     private int _currentHealth;
-    private int _maxHealth;
 
     public HealthController(int maxHealth)
     {
