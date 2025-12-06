@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ExplosionController : Controller
+public class Explosion
 {
     private readonly float _timeBeforeExplosion;
     private readonly ParticleSystem _particleEffect;
@@ -12,7 +12,7 @@ public class ExplosionController : Controller
     private bool _isExploding;
     private bool _isDestroyed;
 
-    public ExplosionController(float timeBeforeExplosion, Transform transform, float radiusExplode, ParticleSystem particleEffect, int damage)
+    public Explosion(float timeBeforeExplosion, Transform transform, float radiusExplode, ParticleSystem particleEffect, int damage)
     {
         _timeBeforeExplosion = timeBeforeExplosion;
         _transform = transform;
@@ -23,7 +23,7 @@ public class ExplosionController : Controller
 
     public void Explode() => _isExploding = true;
 
-    protected override void UpdateLogic(float deltaTime)
+    public void Update(float deltaTime)
     {
         ProcessExplosionCountdown(deltaTime);    
     }

@@ -316,7 +316,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4345125146947928993}
   - component: {fileID: 3743211112895631461}
-  - component: {fileID: 7243324612799679905}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -333,8 +332,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2415409148624228081}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 2.5635128, y: 17.398027, z: 42.380074}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -344,7 +343,7 @@ Transform:
   - {fileID: 6510246230868561153}
   - {fileID: 2049306418786020756}
   m_Father: {fileID: 906119755305678319}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3743211112895631461
 Animator:
   serializedVersion: 5
@@ -413,6 +412,8 @@ GameObject:
   - component: {fileID: 3075572799418029440}
   - component: {fileID: 7769965682845756423}
   - component: {fileID: 5010106717932729062}
+  - component: {fileID: 2041483883847754578}
+  - component: {fileID: 1984242757718312374}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -451,8 +452,6 @@ MonoBehaviour:
   _rotationSpeed: 300
   _movementSpeed: 3
   _maxHealth: 10
-  _destinationMarker: {fileID: 0}
-  _healthBar: {fileID: 0}
 --- !u!136 &7769965682845756423
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -498,6 +497,32 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2041483883847754578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3515090840988598606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b463c75bac493c94a94a14dc0a3c8b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 10
+  _progressBar: {fileID: 0}
+--- !u!114 &1984242757718312374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3515090840988598606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d163ffd5eaefeb048b4dc00e708a78fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3551423312689419103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,26 +1719,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8346645900776218696, guid: 84fc44f73499ea7498a398367daff55c,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7243324612799679905}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84fc44f73499ea7498a398367daff55c, type: 3}
---- !u!114 &7243324612799679905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2415409148624228081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 110445626fbc4e548bb64cbc1c77f5b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rotationSpeed: 300
-  _movementSpeed: 3
-  _maxHealth: 10
-  _destinationMarker: {fileID: 0}
-  _healthBar: {fileID: 0}

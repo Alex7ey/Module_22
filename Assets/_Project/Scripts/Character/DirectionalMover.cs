@@ -2,22 +2,24 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 
-public class MovementNavMeshAgentController
+public class DirectionalMover
 {
     private readonly NavMeshAgent _agent;
 
-    public MovementNavMeshAgentController(NavMeshAgent agent, float movementSpeed, Vector3 startPosition)
+    public DirectionalMover(NavMeshAgent agent, float movementSpeed)
     {
         _agent = agent;
-
-        SetMovePoint(startPosition);
-        ConfigureNavMeshAgent(movementSpeed);
+        _agent.speed = movementSpeed;
+        CurrentPositionTarget = agent.transform.position;
     }
 
     public Vector3 CurrentPositionTarget { get; private set; }
 
     public void SetMovePoint(Vector3 point)
     {
+        if (IsValidPath(point) == false)
+            return;
+        
         CurrentPositionTarget = point;
         _agent.SetDestination(CurrentPositionTarget);
     }
@@ -28,10 +30,5 @@ public class MovementNavMeshAgentController
         _agent.CalculatePath(point, path);
 
         return path.status == NavMeshPathStatus.PathComplete;
-    }
-
-    private void ConfigureNavMeshAgent(float movementSpeed)
-    {
-        _agent.speed = movementSpeed;
     }
 }

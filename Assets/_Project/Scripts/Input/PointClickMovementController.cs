@@ -3,17 +3,16 @@ using UnityEngine;
 public class PointClickMovementController : Controller
 {
     private readonly IMovable _movable;
-    private readonly InputMouseController _mouseController;
+    private const int LeftMouseButton = 0;
 
-    public PointClickMovementController(IMovable movable, InputMouseController mouseController)
+    public PointClickMovementController(IMovable movable)
     {
         _movable = movable;
-        _mouseController = mouseController;
     }
 
     protected override void UpdateLogic(float deltaTime)
     {
-        if (_mouseController.IsMoveCommand && TryGetPoint(out Vector3 targetPoint))
+        if (Input.GetMouseButtonDown(LeftMouseButton) && TryGetPoint(out Vector3 targetPoint))
         {
             _movable.MoveTo(targetPoint);
         }
