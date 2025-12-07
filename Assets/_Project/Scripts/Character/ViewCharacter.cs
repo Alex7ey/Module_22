@@ -3,20 +3,24 @@ using UnityEngine;
 public class ViewCharacter : MonoBehaviour
 {
     private Animator _animator;
+    private Character _character;
 
-    private IMovable _movable;
-    private IHealthSystem _healthSystem;
+    private HealthSystem _healthSystem;
 
     private int _moveKey = Animator.StringToHash("MovementSpeed");
     private int _healthKey = Animator.StringToHash("Health");
     private int _hitKey = Animator.StringToHash("Hit");
     private int _deadKey = Animator.StringToHash("Dead");
 
+    public void Initialize(HealthSystem healthSystem)
+    {
+        _healthSystem = healthSystem;
+    }
+
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
-        _movable = GetComponent<IMovable>();
-        _healthSystem = GetComponent<IHealthSystem>();
+        _character = GetComponent<Character>();
     }
 
     private void Update()
@@ -31,7 +35,7 @@ public class ViewCharacter : MonoBehaviour
             TriggerDeathAnimation();
     }
 
-    private void SetMovementParameter() => _animator.SetFloat(_moveKey, (_movable.CurrentDirectionToTarget).magnitude);
+    private void SetMovementParameter() => _animator.SetFloat(_moveKey, (_character.CurrentDirectionToTarget).magnitude);
 
     private void SetHealthParameter() => _animator.SetFloat(_healthKey, _healthSystem.CurrentHealth / _healthSystem.MaxHealth);
 

@@ -1,20 +1,16 @@
 using UnityEngine;
 
-public class HealthSystem : MonoBehaviour, IHealthSystem
+public class HealthSystem : MonoBehaviour, IDamagable
 {
-    private int _maxHealth;
+    [SerializeField] private int _maxHealth;
+
+    private IMortal _mortal;
     private int _currentHealth;
 
     public bool IsAlive => _currentHealth > 0;
     public bool IsTakeDamage { get; private set; }
     public int CurrentHealth => _currentHealth;
     public int MaxHealth => _maxHealth;
-
-    public void Inizialize(int maxHealth)
-    {
-        _currentHealth = maxHealth;
-        _maxHealth = maxHealth;
-    }
 
     public void TakeDamage(int damage)
     {
@@ -23,9 +19,10 @@ public class HealthSystem : MonoBehaviour, IHealthSystem
 
         _currentHealth -= damage;
 
-        if (_currentHealth < 0)
+        if (_currentHealth <= 0)
         {
             _currentHealth = 0;
+            _mortal.Die();
             return;
         }
 
@@ -35,5 +32,11 @@ public class HealthSystem : MonoBehaviour, IHealthSystem
     private void Update()
     {
         IsTakeDamage = false;
+    }
+
+    private void Awake()
+    {
+        _currentHealth = _maxHealth;
+        _mortal = GetComponent<IMortal>();
     }
 }

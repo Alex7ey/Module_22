@@ -2,45 +2,46 @@ using UnityEngine;
 
 public class DestinationMarker : MonoBehaviour
 {
-    [SerializeField] private GameObject _marker;
-    [SerializeField] private Character _character;
+    [SerializeField] private Transform _marker;
+    [SerializeField] private float _collectionDistance = 0.7f;
+    private IMovable _movable;
 
     private Vector3 _targetPosition;
 
-    private const float CollectionDistance = 0.5f;
-
-    private void Awake()
+    public void Initialize(IMovable movable)
     {
-        _targetPosition = _character.transform.position;
+        _movable = movable;
+
+        _targetPosition = _movable.CurrentPosition;
         DisableMarker();
     }
 
-    private void Update()
+    public void Update()
     {
+
+        if (_targetPosition != _movable.CurrentPositionTarget)
+        { 
+            SetMarkerPosition();
+            EnableMarker();
+        }
+
         if (IsTargetReached())
         {
             DisableMarker();
-            return;
-        }
-
-        if (_targetPosition != _character.CurrentPositionTarget)
-        {
-            SetMarkerPosition();
-            EnableMarker();
         }
     }
 
     private void SetMarkerPosition()
     {
-        _marker.transform.position = _character.CurrentPositionTarget;
-        _targetPosition = _character.CurrentPositionTarget;
+        _marker.transform.position = _movable.CurrentPositionTarget;
+        _targetPosition = _movable.CurrentPositionTarget;
 
         EnableMarker();
     }
 
-    private void EnableMarker() => _marker.SetActive(true);
+    private void EnableMarker() => _marker.gameObject.SetActive(true);
 
-    private void DisableMarker() => _marker.SetActive(false);
+    private void DisableMarker() => _marker.gameObject.SetActive(false);
 
-    private bool IsTargetReached() => (_marker.transform.position- _character.CurrentPosition).magnitude <= CollectionDistance;
+    private bool IsTargetReached() => (_marker.transform.position- _movable.CurrentPosition).magnitude <= _collectionDistance;
 }

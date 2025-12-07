@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PointClickMovementController : Controller
 {
-    private readonly IMovable _movable;
+    private readonly Character _movable;
     private const int LeftMouseButton = 0;
 
-    public PointClickMovementController(IMovable movable)
+    public PointClickMovementController(Character movable)
     {
         _movable = movable;
     }

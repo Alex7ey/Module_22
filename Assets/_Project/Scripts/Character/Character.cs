@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class Character : MonoBehaviour, IMovable, IRotate, IDamagable
+public class Character : MonoBehaviour, IMovable, IRotate, IMortal
 {
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _movementSpeed;
@@ -11,46 +11,40 @@ public class Character : MonoBehaviour, IMovable, IRotate, IDamagable
 
     private NavMeshAgent _agent;
 
-    private DirectionalMover _movementController;
-    private DirectionalRotator _rotationController;
-    private HealthSystem _healthSystem;
+    private DirectionalMover _directionalMover;
+    private DirectionalRotator _directionalRotator;
 
-    public Vector3 CurrentPositionTarget => _movementController.CurrentPositionTarget;
+    public Vector3 CurrentPositionTarget => _directionalMover.CurrentPositionTarget;
     public Vector3 CurrentDirectionToTarget => CurrentPositionTarget - transform.position;
     public Vector3 CurrentPosition => transform.position;
+    public bool IsDead { get; private set; }
 
     public void MoveTo(Vector3 point)
     {
-        if (_healthSystem.IsAlive == false)
+        if (IsDead)
             return;
 
-        _movementController.SetMovePoint(point);
+        _directionalMover.SetMovePoint(point);
         SetLookAtPosition(point);
     }
 
     public void SetLookAtPosition(Vector3 point)
     {
-        _rotationController.SetLookAtPosition(point);
+        _directionalRotator.SetLookAtPosition(point);
     }
 
-    public void TakeDamage(int damage)
-    {
-        _healthSystem.TakeDamage(damage);
-    }
+    public void Die() => IsDead = true;
 
     private void Awake()
     {
         _agent = GetComponentInChildren<NavMeshAgent>();
-        _healthSystem = GetComponent<HealthSystem>();
-        _healthSystem.Inizialize(_maxHealth);
 
-        _movementController = new(_agent, _movementSpeed);
-        _rotationController = new(transform, _rotationSpeed, _agent);
+        _directionalMover = new(_agent, _movementSpeed);
+        _directionalRotator = new(transform, _rotationSpeed, _agent);
     }
 
     private void Update()
     {
-        _rotationController.Update(Time.deltaTime);
+        _directionalRotator.Update(Time.deltaTime);
     }
-
 }

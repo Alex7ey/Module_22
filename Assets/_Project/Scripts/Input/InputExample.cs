@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class InputExample : MonoBehaviour
 {
-    [SerializeField] private Character _character;
-
     private Controller _characterController;
 
-    private void Awake()
+    public void Initialize(Controller controller)
     {
-        _characterController = new PointClickMovementController(_character);
+        _characterController = controller;
         _characterController.Enable();
     }
 
