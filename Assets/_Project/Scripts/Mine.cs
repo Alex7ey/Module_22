@@ -9,7 +9,6 @@ public class Mine : MonoBehaviour, IDetect
 
     private RadiusDetectionController _radiusDetectionController;
     private ExplosionController _explosionController;
-    private CompositeController _controllers;
 
     public void Detected()
     {
@@ -19,20 +18,19 @@ public class Mine : MonoBehaviour, IDetect
     private void Awake()
     {
         InitializeControllers();
-        _controllers.Enable();
     }
 
     private void InitializeControllers()
     {
         _radiusDetectionController = new(this, _detectionRadius, transform);
-        _explosionController = new(_timeBeforeExplosion, transform, _detectionRadius, _explosionEffect , _damage);
+        _explosionController = new(_timeBeforeExplosion, transform, _detectionRadius, _explosionEffect , _damage, this);
 
-        _controllers = new CompositeController(_radiusDetectionController, _explosionController);
+        _radiusDetectionController.Enable();
     }
 
     private void Update()
     {
-        _controllers.Update(Time.deltaTime);
+        _radiusDetectionController.Update(Time.deltaTime);
     }
 
     private void OnDrawGizmos()

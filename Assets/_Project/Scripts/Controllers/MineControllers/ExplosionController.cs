@@ -1,43 +1,42 @@
+using System.Collections;
 using UnityEngine;
 
-public class ExplosionController : Controller
+public class ExplosionController
 {
-    private readonly float _timeBeforeExplosion;
-    private readonly ParticleSystem _particleEffect;
-    private readonly Transform _transform;
-    private readonly float _radiusExplode;
     private readonly int _damage;
+    private readonly float _radiusExplode;
+    private readonly float _timeBeforeExplosion;
 
-    private float _timer;
+    private readonly Transform _transform;
+    private readonly ParticleSystem _particleEffect;
+    private readonly MonoBehaviour _coroutineRunner;
+
     private bool _isExploding;
     private bool _isDestroyed;
 
-    public ExplosionController(float timeBeforeExplosion, Transform transform, float radiusExplode, ParticleSystem particleEffect, int damage)
+    public ExplosionController(float timeBeforeExplosion, Transform transform, float radiusExplode, ParticleSystem particleEffect, int damage, MonoBehaviour coroutineRunner)
     {
         _timeBeforeExplosion = timeBeforeExplosion;
         _transform = transform;
         _radiusExplode = radiusExplode;
         _particleEffect = particleEffect;
         _damage = damage;
+        _coroutineRunner = coroutineRunner;
     }
 
-    public void Explode() => _isExploding = true;
+    public void Explode() => _coroutineRunner.StartCoroutine(ProcessExplosionCountdown());
 
-    protected override void UpdateLogic(float deltaTime)
+    private IEnumerator ProcessExplosionCountdown()
     {
-        ProcessExplosionCountdown(deltaTime);    
-    }
-
-    private void ProcessExplosionCountdown(float deltaTime)
-    {
-        if (_isExploding && _isDestroyed == false)
+        if (_isExploding == false && _isDestroyed == false)
         {
-            _timer += deltaTime;
-            if (_timer >= _timeBeforeExplosion)
-            {
-                ExecuteExplosion();
-                _isDestroyed = true;
-            }
+            _isExploding = true;
+            yield return new WaitForSeconds(_timeBeforeExplosion);
+
+            ExecuteExplosion();
+            _isDestroyed = true;
+
+            yield break;
         }
     }
 

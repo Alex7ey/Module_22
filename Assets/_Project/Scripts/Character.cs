@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class Character : MonoBehaviour, IMovable, IRotate, IDamagable
+public class Character : MonoBehaviour, IMovable, IRotate, IDamagable, IHealable
 {
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _movementSpeed;
@@ -49,6 +49,12 @@ public class Character : MonoBehaviour, IMovable, IRotate, IDamagable
         _healthBarController.SetValueProgress(_healthController.CurrentHealth);
     }
 
+    public void Heal(int amount)
+    {
+        _healthController.Healling(amount);
+        _healthBarController.SetValueProgress(_healthController.CurrentHealth);
+    }
+
     private void Awake()
     {
         InitializeComponents();
@@ -92,4 +98,5 @@ public class Character : MonoBehaviour, IMovable, IRotate, IDamagable
     private void EnableControllers() => _controllers.Enable();
 
     private void UpdateControllers() => _controllers.Update(Time.deltaTime);
+
 }

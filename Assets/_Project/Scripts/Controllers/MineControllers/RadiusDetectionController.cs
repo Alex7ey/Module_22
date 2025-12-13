@@ -5,7 +5,7 @@ public class RadiusDetectionController : Controller
     private readonly IDetect _detect;
     private readonly float _radius;
     private readonly Transform _transform;
-
+  
     public RadiusDetectionController(IDetect detect, float radius, Transform transform)
     {
         _detect = detect;

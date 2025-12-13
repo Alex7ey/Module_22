@@ -14,6 +14,7 @@ public class HealthController : Controller, IHealthSystem
     public bool IsTakeDamage { get; private set; }
     public int CurrentHealth => _currentHealth;
     public int MaxHealth => _maxHealth;
+    public bool IsHealing { get; private set; }
 
     public void TakeDamage(int damage)
     {
@@ -31,8 +32,25 @@ public class HealthController : Controller, IHealthSystem
         IsTakeDamage = true;
     }
 
+    public void Healling(int health)
+    {
+        if (_currentHealth < _maxHealth && IsAlive == false)
+            return;
+
+        _currentHealth += health;
+
+        if (_currentHealth > _maxHealth)
+        {
+            _currentHealth = _maxHealth;
+            return;
+        }
+
+        IsHealing = true;
+    }
+
     protected override void UpdateLogic(float deltaTime)
     {
         IsTakeDamage = false;
+        IsHealing = false;
     }
 }
